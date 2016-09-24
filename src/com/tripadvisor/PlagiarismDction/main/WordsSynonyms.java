@@ -22,7 +22,7 @@ public class WordsSynonyms implements Synonyms<String> {
 	public void loadSynonymsWithoutClear(List<List<String>> synonymsList){
 		
 		Iterator<List<String>> listIterator = synonymsList.iterator();
-		
+		System.out.println("synonymsList.size() =" + synonymsList.size());
 		while(listIterator.hasNext()){
 			List<String> synonyms =  listIterator.next();
 			Iterator<String> wordIterator =  synonyms.iterator();			
@@ -40,6 +40,10 @@ public class WordsSynonyms implements Synonyms<String> {
 			}
 			
 		}
+		
+		System.out.println(getSynonymsOf("run"));
+		System.out.println(getSynonymsOf("jog"));
+		System.out.println(getSynonymsOf("sprint"));
 	}
 	
 	@Override

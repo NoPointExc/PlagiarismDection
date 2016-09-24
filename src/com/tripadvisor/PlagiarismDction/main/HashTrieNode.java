@@ -68,22 +68,26 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		HashTrieNode<T> node = this;
 		
 		for(int i=0; i<tupleOfValue.size(); i++){
-			if(node.getChildren(tupleOfValue.get(i))!=null){
-				node = node.getChildren(tupleOfValue.get(i));
+			T nextValue = tupleOfValue.get(i);
+			if(node.getChildren(nextValue)!=null){
+				node = node.getChildren(nextValue);
 			}else{
-				List<T> synonymsWords = synonyms.getSynonymsOf( node.getValue());
-				HashTrieNode<T> similarNode = null;
+				List<T> synonymsWords = synonyms.getSynonymsOf( nextValue);
+				//System.out.println("synonymsWords of " +node.getValue()+ "="+synonymsWords);
+				HashTrieNode<T> synonymsNode = null;
 				if(synonymsWords != null) {	
 					for(T word:synonymsWords){
+						System.out.println(word);
 						if(node.getChildren(word)!=null){
-							similarNode = node.getChildren(word);
+							synonymsNode = node.getChildren(word);
+							break;
 						}
 					}
 				}
 					
-				if(similarNode == null)
+				if(synonymsNode == null)
 					return false;
-				node = similarNode;	
+				node = synonymsNode;	
 			}
 		}
 		

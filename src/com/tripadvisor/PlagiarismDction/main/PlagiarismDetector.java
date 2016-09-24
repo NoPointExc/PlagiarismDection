@@ -49,9 +49,12 @@ public class PlagiarismDetector {
 		//TODO: get level to jump unnecessay compare
 		while( originWordsIterator.hasNext() ){			
 			tupleQueue.offer( originWordsIterator.next() );
+			System.out.println(tupleQueue);
 			if( trie.contains(tupleQueue,synonyms) ){
+				System.out.print("contain");
 				count++;
-			}
+			}else
+				System.out.print("do not contain");
 			tupleQueue.pop();
 		}
 		
