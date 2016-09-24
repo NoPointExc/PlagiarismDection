@@ -45,7 +45,7 @@ public class HashTrieNode<T> implements TrieNode<T>{
 	}
 	
 	//TODO: iterator
-	@Override
+	
 	public boolean contains(List<T> tupleOfValue) {
 		HashTrieNode<T> node = this;
 		
@@ -54,6 +54,36 @@ public class HashTrieNode<T> implements TrieNode<T>{
 				node = node.getChildren(tupleOfValue.get(i));
 			}else{
 				return false;
+			}
+		}
+		
+		return node!=null && node.isEnd();
+	}
+	
+	@Override
+	public boolean contains(List<T> tupleOfValue, Synonyms<T> synonyms) {
+		if(synonyms == null)
+			return contains(tupleOfValue);
+		
+		HashTrieNode<T> node = this;
+		
+		for(int i=0; i<tupleOfValue.size(); i++){
+			if(node.getChildren(tupleOfValue.get(i))!=null){
+				node = node.getChildren(tupleOfValue.get(i));
+			}else{
+				List<T> synonymsWords = synonyms.getSynonymsOf( node.getValue());
+				HashTrieNode<T> similarNode = null;
+				if(synonymsWords != null) {	
+					for(T word:synonymsWords){
+						if(node.getChildren(word)!=null){
+							similarNode = node.getChildren(word);
+						}
+					}
+				}
+					
+				if(similarNode == null)
+					return false;
+				node = similarNode;	
 			}
 		}
 		

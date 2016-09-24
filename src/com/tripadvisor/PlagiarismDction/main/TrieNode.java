@@ -9,7 +9,7 @@ public interface TrieNode<T> {
 	public boolean isLeaf();
 	public boolean isRoot();
 	public Map <T, TrieNode<T>> getChildren();
-	public boolean contains(List<T> tuple);
+	public boolean contains(List<T> tuple, Synonyms<T> synonyms);
 	public boolean isEnd();
 	//set
 	public void setEnd(boolean isEnd);

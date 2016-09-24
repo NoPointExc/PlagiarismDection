@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.tripadvisor.PlagiarismDction.main.PlagiarismDetector;
+import com.tripadvisor.PlagiarismDction.main.Synonyms;
+import com.tripadvisor.PlagiarismDction.main.WordsSynonyms;
 import com.tripadvisor.PlagiarismDction.util.FileParser;
 
 public class PlagiarismDetectorTest {
@@ -45,7 +47,9 @@ public class PlagiarismDetectorTest {
 		
 		synonymsList = new LinkedList<List<String>> ();
 		synonymsList.add(runWrods);
-		dector = new PlagiarismDetector(synonymsList);
+		Synonyms<String> wordSynonyms= new WordsSynonyms();
+		wordSynonyms.loadSynonyms(synonymsList);
+		dector = new PlagiarismDetector(wordSynonyms);
 		
 		System.out.println( dector.countMatch(goToRun, goToJog,3) );
 		assertEquals(dector.countMatch(goToRun, goToJog, 3),2);
@@ -57,8 +61,9 @@ public class PlagiarismDetectorTest {
 		
 		synonymsList = new LinkedList<List<String>> ();
 		synonymsList.add(oddNum);
-	
-		dector = new PlagiarismDetector(synonymsList);
+		WordsSynonyms wordSynonyms2= new WordsSynonyms();
+		wordSynonyms2.loadSynonyms(synonymsList);
+		dector.setSynonyms(wordSynonyms2);
 		
 		tupleSize = 3;
 		System.out.println( dector.countMatch(allNum, allNum, tupleSize) );
@@ -77,7 +82,9 @@ public class PlagiarismDetectorTest {
 		
 		synonymsList = new LinkedList<List<String>> ();
 		synonymsList.add(evenNum);
-		dector = new PlagiarismDetector(synonymsList);
+		wordSynonyms2.clearSynonyms();
+		wordSynonyms2.loadSynonymsWithoutClear(synonymsList);
+		dector.setSynonyms(wordSynonyms2);
 		
 		List<String> fourNum = getStringsofNumEvery(4,0,upto);
 		System.out.println( dector.countMatch(fourNum, evenNum, 2) );	
