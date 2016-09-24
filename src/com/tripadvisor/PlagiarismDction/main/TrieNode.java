@@ -13,7 +13,7 @@ public interface TrieNode<T> {
 	public boolean isEnd();
 	//set
 	public void setEnd(boolean isEnd);
-	//
+	//action
 	public void attach(T word);
 	public void insert(final List<T> words);
 	

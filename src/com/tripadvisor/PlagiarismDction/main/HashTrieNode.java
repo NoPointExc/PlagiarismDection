@@ -44,7 +44,6 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		return (HashTrieNode<T>)children.get(value);
 	}
 	
-	//TODO: iterator
 	
 	public boolean contains(List<T> tupleOfValue) {
 		HashTrieNode<T> node = this;
@@ -69,20 +68,25 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		
 		for(int i=0; i<tupleOfValue.size(); i++){
 			T nextValue = tupleOfValue.get(i);
+			
 			if(node.getChildren(nextValue)!=null){
+			
 				node = node.getChildren(nextValue);
+			
 			}else{
+				
 				List<T> synonymsWords = synonyms.getSynonymsOf( nextValue);
-				//System.out.println("synonymsWords of " +node.getValue()+ "="+synonymsWords);
 				HashTrieNode<T> synonymsNode = null;
+				
 				if(synonymsWords != null) {	
+					
 					for(T word:synonymsWords){
-						System.out.println(word);
 						if(node.getChildren(word)!=null){
 							synonymsNode = node.getChildren(word);
 							break;
 						}
 					}
+
 				}
 					
 				if(synonymsNode == null)
@@ -106,8 +110,7 @@ public class HashTrieNode<T> implements TrieNode<T>{
 
 	@Override
 	public void insert(final List<T> values) {
-		HashTrieNode<T> node = this;		
-		//Iterator<T> valueIterator = values.iterator();
+		HashTrieNode<T> node = this;
 		int i = 0;		
 		while(i<values.size()){
 			if( node.getChildren(values.get(i))!=null ){
@@ -131,22 +134,4 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		return this.value;
 	}
 	
-	@Override
-	public String toString(){
-		StringBuilder strBuilder = new StringBuilder();
-		LinkedList<HashTrieNode<T>> queue = new LinkedList<HashTrieNode<T>>();
-		queue.offer(this);
-		
-		while(queue.isEmpty()){
-			HashTrieNode<T> node = queue.poll();
-		
-			strBuilder.append(   ((Object)(node.getValue())).hashCode()       );
-			for(T key : node.getChildren().keySet()) {
-				queue.offer((HashTrieNode<T>) node.getChildren().get(key));
-			}
-			
-		}
-		
-		return strBuilder.toString();
-	}
 }

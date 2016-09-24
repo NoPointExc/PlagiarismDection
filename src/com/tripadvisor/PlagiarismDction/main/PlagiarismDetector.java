@@ -16,29 +16,26 @@ public class PlagiarismDetector {
 		this.synonyms = Synonyms;
 	}
 	
-	//TODO: throws null expection when call this method
-	public int countMatch(List<String> words1, List<String> words2, int size) throws IndexOutOfBoundsException{
-		
+	public double getSimilarityRate(List<String> originWords, List<String> againstWords, int size) throws IndexOutOfBoundsException{
+		double rate = 0.0;
+		int matchedWord = countMatch(originWords,againstWords,size);
+		rate = (double)(matchedWord)/(double)(originWords.size()-size+1);
+		return rate; 
+	}
+
+	public int countMatch(List<String> originWords, List<String> againstWords, int size) throws IndexOutOfBoundsException{
 		int count = 0;
 		
-		if(size<=0){
+		if(size<=0)
 			throw new IndexOutOfBoundsException("size expect be a positive number");
-		}
-		
-		if(words1.size()<size){
-			throw new IndexOutOfBoundsException("word 1 size is "+words1.size()+" while tuple size="+size);
-		}
-		
-		if(words2.size()<size){
-			throw new IndexOutOfBoundsException("word 2 size is "+words2.size()+" while tuple size is "+size);
-		}
-		
-		List<String> originWords = words1;
-		List<String> againstWords = words2;
+		if(originWords.size()<size)
+			throw new IndexOutOfBoundsException("originWords size is "+originWords.size()+" while tuple size="+size);
+		if(againstWords.size()<size)
+			throw new IndexOutOfBoundsException("againstWords size is "+againstWords.size()+" while tuple size is "+size);
+		if( againstWords.size()==0)
+			throw new IndexOutOfBoundsException("againstWords should not be empty");
 				
-		TrieNode<String> trie = getTrie(againstWords,size);
-		//System.out.println(trie.toString());
-		
+		TrieNode<String> trie = getTrie(againstWords,size);		
 		LinkedList<String> tupleQueue = new LinkedList<String>();
 		Iterator<String> originWordsIterator = originWords.iterator();
 		
@@ -46,15 +43,11 @@ public class PlagiarismDetector {
 			tupleQueue.offer( originWordsIterator.next() );
 		}
 		
-		//TODO: get level to jump unnecessay compare
 		while( originWordsIterator.hasNext() ){			
 			tupleQueue.offer( originWordsIterator.next() );
-			System.out.println(tupleQueue);
 			if( trie.contains(tupleQueue,synonyms) ){
-				System.out.print("contain");
 				count++;
-			}else
-				System.out.print("do not contain");
+			}
 			tupleQueue.pop();
 		}
 		
@@ -62,7 +55,6 @@ public class PlagiarismDetector {
 	}
 	
 	private TrieNode<String> getTrie(List<String> words, int size){
-		//TODO: isRoot.
 		TrieNode<String> root = new HashTrieNode<String>();
 		TrieNode<String> triePointer = root;
 		Iterator<String> wordIterator = words.iterator();

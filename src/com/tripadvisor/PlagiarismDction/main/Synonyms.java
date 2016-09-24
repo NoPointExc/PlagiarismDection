@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Synonyms<T> {
 	
-	void loadSynonyms(List<List<T>> synonymsList);
+	public void loadSynonyms(List<List<T>> synonymsList);
 	
 	public  boolean isSimilar(T value1, T value2);	
 	

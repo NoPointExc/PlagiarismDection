@@ -9,25 +9,23 @@ import java.util.List;
 public class FileParser{
 
 	//TODO: should throw IO Exception here
-	private static void readFile(String filename, StringBuilder strBuilder){
+	private static void readFile(String filename, StringBuilder strBuilder) throws IOException{
 	    File file = new File(filename); //for ex foo.txt
 	    FileReader reader = null;
-	    try {
+	    try{
 	        reader = new FileReader(file);
 	        char[] chars = new char[(int) file.length()];
 	        reader.read(chars);
 	        strBuilder.append(chars);
 	        reader.close();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } finally {
+	   } finally {
 	        if(reader !=null){
-	        	//reader.close();
+	        	reader.close();
 	        }
 	    }
 	}
 	
-	public static List<String> parseFile(String filename){
+	public static List<String> parseFile(String filename) throws IOException{
 		List<String> wordsList= new LinkedList<String>();
 		StringBuilder strBuilder = new StringBuilder();
 		readFile(filename,strBuilder);
@@ -42,7 +40,7 @@ public class FileParser{
 		return wordsList;
 	}
 	
-	public static List<List<String>> parseSynonyms(String filename){
+	public static List<List<String>> parseSynonyms(String filename) throws IOException{
 		List<List<String>> synonymsList= new LinkedList<List<String>>();
 		StringBuilder strBuilder = new StringBuilder();
 		readFile(filename,strBuilder);	
@@ -52,9 +50,12 @@ public class FileParser{
 			if(line.trim().length()!=0){
 				String[] words = line.split(" ");
 				List<String> wordsList = new LinkedList<String>();
+				
 				for(String word:words){
 					wordsList.add(word.trim().toLowerCase());
 				}
+				
+				synonymsList.add(wordsList);
 			}
 		}
 		
