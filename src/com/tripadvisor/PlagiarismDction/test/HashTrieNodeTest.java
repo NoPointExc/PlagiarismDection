@@ -5,32 +5,12 @@ import static org.junit.Assert.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.tripadvisor.PlagiarismDction.main.HashTrieNode;
-import com.tripadvisor.PlagiarismDction.main.PlagiarismDetector;
-import com.tripadvisor.PlagiarismDction.util.FileParser;
+
 
 public class HashTrieNodeTest {
-	private static String CONFIG_PTH = "D:\\OneDrive\\GeekProjects\\PlagiarismDector\\src\\com\\tripadvisor\\PlagiarismDction\\config\\";
-	private static String SYNONYMS_FILE_PTH =CONFIG_PTH+ "\\synonyms";
-	private static String FILE_1_PTH = CONFIG_PTH+"file1";
-	private static String FILE_2_PTH = CONFIG_PTH+"file2";
-	
-	PlagiarismDetector detector = null;
-	List<String> wordsList1;
-	List<String> wordsList2;
-	@Before
-	public void setUp() throws Exception {
-		List<List<String>> synonymsList = FileParser.parseSynonyms(SYNONYMS_FILE_PTH);
-		wordsList1 = FileParser.parseFile(FILE_1_PTH);
-		wordsList2 = FileParser.parseFile(FILE_2_PTH);
-		System.out.println("wordsList1="+wordsList1);
-		System.out.println("wordsList2="+wordsList2);
-		detector = new PlagiarismDetector(synonymsList);
-		
-	}
 
 	@Test
 	public void containsTest() {

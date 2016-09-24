@@ -6,7 +6,7 @@ import java.io.*;
 
 import com.tripadvisor.PlagiarismDction.util.FileParser;
 
-public class Test{
+public class Main{
 	private static String CONFIG_PTH = "D:\\OneDrive\\GeekProjects\\PlagiarismDector\\src\\com\\tripadvisor\\PlagiarismDction\\config\\";
 	private static String SYNONYMS_FILE_PTH =CONFIG_PTH+ "\\synonyms";
 	private static String FILE_1_PTH = CONFIG_PTH+"file1";

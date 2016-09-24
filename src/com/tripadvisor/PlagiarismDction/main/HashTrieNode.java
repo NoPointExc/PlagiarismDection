@@ -74,9 +74,7 @@ public class HashTrieNode<T> implements TrieNode<T>{
 	public void insert(final List<T> values) {
 		HashTrieNode<T> node = this;		
 		//Iterator<T> valueIterator = values.iterator();
-		T nextValue = null;
-		int i = 0;
-		
+		int i = 0;		
 		while(i<values.size()){
 			if( node.getChildren(values.get(i))!=null ){
 				node = node.getChildren(values.get(i));

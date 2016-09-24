@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PlagiarismDetector {
+	//TODO: if "go" is synonyms of two or more set in same time. 
 	HashMap<String,Integer>  synonymsMap = new HashMap<String,Integer>();
 	
 	public PlagiarismDetector(List<List<String>> synonymsList ){
@@ -44,22 +45,16 @@ public class PlagiarismDetector {
 		}
 		
 		if(words1.size()<size){
-			throw new IndexOutOfBoundsException("word 1 size is"+words1.size()+"while size="+size);
+			throw new IndexOutOfBoundsException("word 1 size is "+words1.size()+" while tuple size="+size);
 		}
 		
 		if(words2.size()<size){
-			throw new IndexOutOfBoundsException("word 2 size is"+words2.size()+"while size is"+size);
+			throw new IndexOutOfBoundsException("word 2 size is "+words2.size()+" while tuple size is "+size);
 		}
 		
 		List<String> originWords = words1;
 		List<String> againstWords = words2;
-		
-		if(originWords.size()<againstWords.size()){
-			List<String> tmp = originWords;
-			originWords = againstWords;
-			againstWords = tmp;
-		}
-		
+				
 		TrieNode<Integer> trie = getTrie(againstWords,size);
 		//System.out.println(trie.toString());
 		
@@ -69,15 +64,15 @@ public class PlagiarismDetector {
 		for(int i=0; i<size-1 && originWordsIterator.hasNext();i++){
 			tupleQueue.offer( getHashCode(originWordsIterator.next()) );
 		}
-		System.out.println("tupleQueue="+tupleQueue);
+		//System.out.println("tupleQueue="+tupleQueue);
 		//TODO: get level to jump unnecessay compare
 		while( originWordsIterator.hasNext() ){			
 			tupleQueue.offer( getHashCode(originWordsIterator.next()) );
-			System.out.println("tupleQueue="+tupleQueue);
+			//System.out.println("tupleQueue="+tupleQueue);
 			if( trie.contains(tupleQueue) ){
-				System.out.println("found tupleQueue="+tupleQueue);
+				//System.out.println("found tupleQueue="+tupleQueue);
 				count++;
-				System.out.println("========");
+				//System.out.println("========");
 			}
 			tupleQueue.pop();
 		}
