@@ -20,6 +20,7 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		this.isEnd = false;
 	}
 	
+	//these methods should implements in a more general TireNode class. And then extends by this class
 	@Override
 	public boolean isLeaf(){
 		return children.isEmpty();
@@ -59,6 +60,8 @@ public class HashTrieNode<T> implements TrieNode<T>{
 		return node!=null && node.isEnd();
 	}
 	
+	//search each level agaist synonyms. 
+	//should implement from another interface( an interface has nothing todo with Tire Tree)
 	@Override
 	public boolean contains(List<T> tupleOfValue, Synonyms<T> synonyms) {
 		if(synonyms == null)
